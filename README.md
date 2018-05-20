@@ -1,6 +1,9 @@
 # Laravel-Modules
 
 ## Why This Fork?
+- Prefix module name when creating table for the module
+- Added **--api** option when generating controller
+
 The main branch is an excellent work of art! But sometimes when you are building a Module, you need the migration table to have the module's name prefix so as to avoid collision with other tables, and/or keep modules clean. It's arguably easier to view all tables used by the module at a glance, and also avoid collisions with other modules which would potentially use the same table (e.g. Role, Department, Category models)
 This package will generate a migration table prefixed with the module's name.
 ```php
@@ -87,9 +90,11 @@ Require it in your composer
 composer require lexxyungcarter/laravel-modules
 ```
 
+### Updates
+This package will always be kept in sync with the parent fork. No need to worry about obsoleteness.
+
 ### Future
 - Add [laracasts/Laravel-5-Generators-Extended](https://github.com/laracasts/Laravel-5-Generators-Extended) features into the package to extend migration command features. (Maybe you'll fork it and push it here? That would be GREAT!)
-- Add **-c --api** to the package to conform more to Laravel artisan commands.
 
 ## Credits
 - [Lexx YungCarter](https://github.com/lexxyungcarter) - The IT guy!
