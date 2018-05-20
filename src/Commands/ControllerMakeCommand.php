@@ -121,7 +121,7 @@ class ControllerMakeCommand extends GeneratorCommand
             return '/controller-plain.stub';
         }
         if ($this->option('api') == true) {
-            $stub = '/controller-api.stub';
+            return '/controller-api.stub';
         }
 
         return '/controller.stub';
