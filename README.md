@@ -1,5 +1,100 @@
 # Laravel-Modules
 
+## Why This Fork?
+The main branch is an excellent work of art! But sometimes when you are building a Module, you need the migration table to have the module's name prefix so as to avoid collision with other tables, and/or keep modules clean. It's arguably easier to view all tables used by the module at a glance, and also avoid collisions with other modules which would potentially use the same table (e.g. Role, Department, Category models)
+This package will generate a migration table prefixed with the module's name.
+```php
+// artisan command. Syntax: model name, module name, -m (migration flag) -p (prefix flag)
+php artisan module:make-model Person Hr -pm
+```
+## Output
+#### Model:
+
+```php
+
+<?php
+
+namespace $NAMESPACE$; // namespace will be autofilled
+
+use Illuminate\Database\Eloquent\Model;
+
+class Person extends Model
+{
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = $FILLABLE$; // fillable properties will be inserted here if specified
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = "hr_persons"; // auto-generates this in model
+
+    //
+
+}
+```
+
+#### Migration
+
+```php
+// 2018_03_25_210616_create_hr_persons_table.php
+
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateHrPersonsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('hr_persons', function (Blueprint $table) {
+            $table->increments('id');
+
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('hr_persons');
+    }
+}
+
+```
+The automatic appending of module-name in table name is done **Only** when making a model with the migration switch. It **Does Not** affect the *php artisan module:make-migration* just in case you need to generate other migrations to do other stuffs without appending the module name.
+
+## Install
+
+Require it in your composer
+```bash
+composer require lexxyungcarter/laravel-modules
+```
+
+### Future
+- Add [laracasts/Laravel-5-Generators-Extended](https://github.com/laracasts/Laravel-5-Generators-Extended) features into the package to extend migration command features. (Maybe you'll fork it and push it here? That would be GREAT!)
+- Add **-c --api** to the package to conform more to Laravel artisan commands.
+
+## Credits
+- [Lexx YungCarter](https://github.com/lexxyungcarter) - The IT guy!
+
+# Readme From Forked Project
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/nwidart/laravel-modules.svg?style=flat-square)](https://packagist.org/packages/nwidart/laravel-modules)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/nWidart/laravel-modules/master.svg?style=flat-square)](https://travis-ci.org/nWidart/laravel-modules)
