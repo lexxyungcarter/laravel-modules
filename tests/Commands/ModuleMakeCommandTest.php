@@ -68,21 +68,23 @@ class ModuleMakeCommandTest extends BaseTestCase
     }
 
     /** @test */
-    public function it_generates_route_file()
+    public function it_generates_web_route_file()
     {
+        $files = $this->app['modules']->config('stubs.files');
         $this->artisan('module:make', ['name' => ['Blog']]);
 
-        $path = $this->modulePath . '/' . $this->app['modules']->config('stubs.files.routes');
+        $path = $this->modulePath . '/' . $files['routes/web'];
 
         $this->assertMatchesSnapshot($this->finder->get($path));
     }
 
     /** @test */
-    public function it_generates_start_php_file()
+    public function it_generates_api_route_file()
     {
+        $files = $this->app['modules']->config('stubs.files');
         $this->artisan('module:make', ['name' => ['Blog']]);
 
-        $path = $this->modulePath . '/' . $this->app['modules']->config('stubs.files.start');
+        $path = $this->modulePath . '/' . $files['routes/api'];
 
         $this->assertMatchesSnapshot($this->finder->get($path));
     }
@@ -111,6 +113,10 @@ class ModuleMakeCommandTest extends BaseTestCase
         $this->assertMatchesSnapshot($this->finder->get($path));
 
         $path = base_path('modules/Blog') . '/Database/Seeders/BlogDatabaseSeeder.php';
+        $this->assertTrue($this->finder->exists($path));
+        $this->assertMatchesSnapshot($this->finder->get($path));
+
+        $path = base_path('modules/Blog') . '/Providers/RouteServiceProvider.php';
         $this->assertTrue($this->finder->exists($path));
         $this->assertMatchesSnapshot($this->finder->get($path));
     }

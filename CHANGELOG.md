@@ -4,6 +4,31 @@ All Notable changes to `laravel-modules` will be documented in this file.
 
 ## Next
 
+## 4.0.0 - 2018-09-30
+
+### Added
+
+- New way of handling routes by default using a RouteServiceProvider (instead of start.php)
+- Laravel 5.7 support
+
+### Changed
+
+- Allow class resolution on short name and abstract
+- `module:seed` accepts a `--class` option
+
+## 3.3.1 - 2018-07-13
+
+### Changed
+
+- Added the ability to set a sub-namespace to controllers `module:make-controller Api\\TestController`
+
+## 3.3.0 - 2018-06-21
+
+### Changed
+
+- `module:update` command has now the possibility to update all modules at once
+- Fixing commented code for Laravel Mix
+
 ## 3.2.0 - 2018-04-16
 
 ### Added

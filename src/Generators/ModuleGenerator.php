@@ -6,7 +6,7 @@ use Illuminate\Config\Repository as Config;
 use Illuminate\Console\Command as Console;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
-use Nwidart\Modules\Repository;
+use Nwidart\Modules\FileRepository;
 use Nwidart\Modules\Support\Config\GenerateConfigReader;
 use Nwidart\Modules\Support\Stub;
 
@@ -63,16 +63,15 @@ class ModuleGenerator extends Generator
 
     /**
      * The constructor.
-     *
      * @param $name
-     * @param Repository $module
+     * @param FileRepository $module
      * @param Config     $config
      * @param Filesystem $filesystem
      * @param Console    $console
      */
     public function __construct(
         $name,
-        Repository $module = null,
+        FileRepository $module = null,
         Config $config = null,
         Filesystem $filesystem = null,
         Console $console = null
@@ -337,6 +336,10 @@ class ModuleGenerator extends Generator
             '--master' => true,
         ]);
 
+        $this->console->call('module:route-provider', [
+            'module' => $this->getName(),
+        ]);
+
         $this->console->call('module:make-controller', [
             'controller' => $this->getName() . 'Controller',
             'module' => $this->getName(),
@@ -490,10 +493,5 @@ class ModuleGenerator extends Generator
     protected function getAuthorEmailReplacement()
     {
         return $this->module->config('composer.author.email');
-    }
-
-    protected function getRoutesLocationReplacement()
-    {
-        return '/' . $this->module->config('stubs.files.routes');
     }
 }

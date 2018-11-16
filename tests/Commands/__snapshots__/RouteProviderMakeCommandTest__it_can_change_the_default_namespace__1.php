@@ -2,7 +2,7 @@
 
 namespace Modules\\Blog\\SuperProviders;
 
-use Illuminate\\Routing\\Router;
+use Illuminate\\Support\\Facades\\Route;
 use Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
@@ -12,7 +12,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $rootUrlNamespace = \'Modules\\Blog\\Http\\Controllers\';
+    protected $namespace = \'Modules\\Blog\\Http\\Controllers\';
 
     /**
      * Called before routes are registered.
@@ -23,7 +23,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        parent::boot();
     }
 
     /**
@@ -31,11 +31,40 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function map(Router $router)
+    public function map()
     {
-        // if (!app()->routesAreCached()) {
-        //    require __DIR__ . \'/Http/routes.php\';
-        // }
+        $this->mapApiRoutes();
+
+        $this->mapWebRoutes();
+    }
+
+    /**
+     * Define the "web" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapWebRoutes()
+    {
+        Route::middleware(\'web\')
+            ->namespace($this->namespace)
+            ->group(__DIR__ . \'/../Routes/web.php\');
+    }
+
+    /**
+     * Define the "api" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapApiRoutes()
+    {
+        Route::prefix(\'api\')
+            ->middleware(\'api\')
+            ->namespace($this->namespace)
+            ->group(__DIR__ . \'/../Routes/api.php\');
     }
 }
 ';

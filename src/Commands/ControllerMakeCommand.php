@@ -59,7 +59,7 @@ class ControllerMakeCommand extends GeneratorCommand
             'CONTROLLERNAME'    => $this->getControllerName(),
             'NAMESPACE'         => $module->getStudlyName(),
             'CLASS_NAMESPACE'   => $this->getClassNamespace($module),
-            'CLASS'             => $this->getControllerName(),
+            'CLASS'             => $this->getControllerNameWithoutNamespace(),
             'LOWER_NAME'        => $module->getLowerName(),
             'MODULE'            => $this->getModuleName(),
             'NAME'              => $this->getModuleName(),
@@ -104,6 +104,14 @@ class ControllerMakeCommand extends GeneratorCommand
         }
 
         return $controller;
+    }
+
+    /**
+     * @return array|string
+     */
+    private function getControllerNameWithoutNamespace()
+    {
+        return class_basename($this->getControllerName());
     }
 
     public function getDefaultNamespace() : string

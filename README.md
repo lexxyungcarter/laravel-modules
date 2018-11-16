@@ -113,6 +113,7 @@ This package will always be kept in sync with the parent fork. No need to worry 
 | 5.4  | ^1.0  |
 | 5.5  | ^2.0  |
 | 5.6  | ^3.0  |
+| 5.7  | ^4.0  |
 
 `nwidart/laravel-modules` is a Laravel package which created to manage your large Laravel app using modules. Module is like a Laravel package, it has some views, controllers or models. This package is supported and tested in Laravel 5.
 
@@ -167,7 +168,7 @@ You'll find installation instructions and full documentation on [https://nwidart
 
 ## About Nicolas Widart
 
-Nicolas Widart is a freelance web developer specialising on the Laravel framework. View all my packages [on my website](https://nicolaswidart.com/projects).
+Nicolas Widart is a freelance web developer specialising on the Laravel framework. View all my packages [on my website](https://nwidart.com/), or visit [my website](https://nicolaswidart.com).
 
 
 ## License

@@ -5,8 +5,8 @@ namespace Nwidart\Modules\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Support\Str;
+use Nwidart\Modules\Contracts\RepositoryInterface;
 use Nwidart\Modules\Module;
-use Nwidart\Modules\Repository;
 use Nwidart\Modules\Support\Config\GenerateConfigReader;
 use Nwidart\Modules\Traits\ModuleCommandTrait;
 use RuntimeException;
@@ -57,14 +57,13 @@ class SeedCommand extends Command
 
     /**
      * @throws RuntimeException
-     *
-     * @return Repository
+     * @return RepositoryInterface
      */
-    public function getModuleRepository()
+    public function getModuleRepository(): RepositoryInterface
     {
         $modules = $this->laravel['modules'];
-        if (!$modules instanceof Repository) {
-            throw new RuntimeException("Module repository not found!");
+        if (!$modules instanceof RepositoryInterface) {
+            throw new RuntimeException('Module repository not found!');
         }
 
         return $modules;
@@ -123,9 +122,11 @@ class SeedCommand extends Command
      */
     protected function dbSeed($className)
     {
-        $params = [
-            '--class' => $className,
-        ];
+        if ($option = $this->option('class')) {
+            $params['--class'] = Str::finish(substr($className, 0, strrpos($className, '\\')), '\\') . $option;
+        } else {
+            $params = ['--class' => $className];
+        }
 
         if ($option = $this->option('database')) {
             $params['--database'] = $option;
