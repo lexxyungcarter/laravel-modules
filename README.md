@@ -2,13 +2,16 @@
 
 ## Why This Fork?
 - Prefix module name when creating table for the module
-- Added **--api** option when generating controller
+- Added `--api` option when generating controller
 
 The main branch is an excellent work of art! But sometimes when you are building a Module, you need the migration table to have the module's name prefix so as to avoid collision with other tables, and/or keep modules clean. It's arguably easier to view all tables used by the module at a glance, and also avoid collisions with other modules which would potentially use the same table (e.g. Role, Department, Category models)
 This package will generate a migration table prefixed with the module's name.
-```php
-// artisan command. Syntax: model name, module name, -m (migration flag) -p (prefix flag)
+```bash
+# artisan command. Syntax: model name, module name, -m (migration flag) -p (prefix flag)
 php artisan module:make-model Person Hr -pm
+
+# API Controllers generation
+php artisan module:make-controller Postcontroller --api
 ```
 ## Output
 #### Model:
@@ -83,21 +86,36 @@ class CreateHrPersonsTable extends Migration
 ```
 The automatic appending of module-name in table name is done **Only** when making a model with the migration switch. It **Does Not** affect the *php artisan module:make-migration* just in case you need to generate other migrations to do other stuffs without appending the module name.
 
+
 ## Install
 
-Require it in your composer
-```bash
+To install through Composer, by run the following command:
+
+``` bash
 composer require lexxyungcarter/laravel-modules
 ```
 
+The package will automatically register a service provider and alias.
+
+Optionally, publish the package's configuration file by running:
+
+``` bash
+php artisan vendor:publish --provider="Nwidart\Modules\LaravelModulesServiceProvider"
+```
+
+> NB: Namespacing has been preserved to the parent's repo for easier migration between the packages.
+However, if coming from the parent repo, you should uninstall the package before requiring this package
+to avoid collisions.
+
 ### Updates
-This package will always be kept in sync with the parent fork. No need to worry about obsoleteness.
+This package will always be kept in sync with the parent repo. No need to worry about obsoleteness.
 
 ### Future
 - Add [laracasts/Laravel-5-Generators-Extended](https://github.com/laracasts/Laravel-5-Generators-Extended) features into the package to extend migration command features. (Maybe you'll fork it and push it here? That would be GREAT!)
 
 ## Credits
-- [Lexx YungCarter](https://github.com/lexxyungcarter) - The IT guy!
+- [Lexx YungCarter](https://github.com/lexxyungcarter)
+- [Nicolas Widart](https://github.com/nwidart)
 
 # Readme From Forked Project
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/nwidart/laravel-modules.svg?style=flat-square)](https://packagist.org/packages/nwidart/laravel-modules)
@@ -123,13 +141,6 @@ With one big added bonus that the original package didn't have: **tests**.
 
 Find out why you should use this package in the article: [Writing modular applications with laravel-modules](https://nicolaswidart.com/blog/writing-modular-applications-with-laravel-modules).
 
-## Install
-
-To install through Composer, by run the following command:
-
-``` bash
-composer require nwidart/laravel-modules
-```
 
 The package will automatically register a service provider and alias.
 
